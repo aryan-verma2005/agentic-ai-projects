@@ -1,7 +1,7 @@
+import os
 from textwrap import dedent
 from dotenv import load_dotenv
 from agno.agent import Agent
-from agno.models.groq import Groq
 from agno.models.google import GeminiInteractions
 from agno.tools.youtube import YouTubeTools
 
@@ -10,7 +10,10 @@ load_dotenv()
 def build_youtube_agent():
     return Agent(
         name='YouTube Agent',
-        model=Groq(id="qwen/qwen3.6-27b"),
+        model=GeminiInteractions(
+            id="gemini-3.7-flash",
+            api_key=os.getenv("GOOGLE_API_KEY"),
+        ),
         tools=[YouTubeTools()],
         instructions=dedent("""\
             You are an expert YouTube content analyst with a keen eye for detail! 🎓
